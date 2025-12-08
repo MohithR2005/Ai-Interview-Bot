@@ -34,7 +34,11 @@ export const uploadResume = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Resume Upload Error:", error);
-    res.status(500).json({ error: "Failed to process resume" });
+    // Send specific error message for debugging
+    res.status(500).json({
+      error: "Failed to process resume",
+      details: error.message
+    });
   }
 };
 

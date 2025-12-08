@@ -35,14 +35,14 @@ export default function ResumeAnalysis() {
   }, []);
 
   const startInterview = (roundType) => {
-  navigate(`/interview-session/${roundType}`, {
-    state: {
-      role: roleTitle,
-      resumeText: resumeText,
-      round: roundType
-    }
-  });
-};
+    navigate(`/interview-session/${roundType}`, {
+      state: {
+        role: roleTitle,
+        resumeText: resumeText,
+        round: roundType
+      }
+    });
+  };
 
   const extractTextFromPDF = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -134,22 +134,22 @@ export default function ResumeAnalysis() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 relative">
+    <div className="min-h-screen flex justify-center items-center p-6">
+      <div className="w-full max-w-2xl bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl p-8 relative">
 
-        <button onClick={() => navigate(-1)} className="absolute top-4 left-4">
+        <button onClick={() => navigate(-1)} className="absolute top-4 left-4 text-gray-400 hover:text-white transition">
           <ArrowLeft size={22} />
         </button>
 
-        <h1 className="text-xl font-bold text-center mb-4">Resume Analysis</h1>
-        <p className="text-center mb-6">
-          Role: <span className="text-blue-600 font-semibold">{roleTitle}</span>
+        <h1 className="text-xl font-bold text-center mb-4 text-white">Resume Analysis</h1>
+        <p className="text-center mb-6 text-gray-300">
+          Role: <span className="text-blue-400 font-semibold">{roleTitle}</span>
         </p>
 
         {!resumeText && (
           <form onSubmit={handleAnalyze} className="text-center">
-            <input type="file" onChange={handleFileChange} />
-            <motion.button type="submit" className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-xl">
+            <input type="file" onChange={handleFileChange} className="text-gray-300 mb-4" />
+            <motion.button type="submit" className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition">
               {loading ? "Analyzing..." : "Analyze Resume"}
             </motion.button>
           </form>
@@ -157,22 +157,22 @@ export default function ResumeAnalysis() {
 
         {analysis && (
           <>
-            <h2 className="mt-4">Match: {analysis.matchScore}%</h2>
-            <ul className="list-disc pl-6">
+            <h2 className="mt-4 text-white font-semibold">Match: <span className="text-blue-300">{analysis.matchScore}%</span></h2>
+            <ul className="list-disc pl-6 text-gray-300 mt-2 space-y-1">
               {analysis.suggestions.map((s, i) => <li key={i}>{s}</li>)}
             </ul>
 
-            <div className="flex gap-3 mt-6">
-              <button onClick={() => startInterview("technical")} className="bg-blue-500 text-white px-4 py-2 rounded-xl">
-                <Brain /> Technical
+            <div className="flex gap-3 mt-6 flex-wrap justify-center">
+              <button onClick={() => startInterview("technical")} className="bg-blue-600/80 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition flex items-center gap-2">
+                <Brain size={18} /> Technical
               </button>
 
-              <button onClick={() => startInterview("managerial")} className="bg-indigo-500 text-white px-4 py-2 rounded-xl">
-                <Briefcase /> Managerial
+              <button onClick={() => startInterview("managerial")} className="bg-indigo-600/80 text-white px-4 py-2 rounded-xl hover:bg-indigo-600 transition flex items-center gap-2">
+                <Briefcase size={18} /> Managerial
               </button>
 
-              <button onClick={() => startInterview("hr")} className="bg-pink-500 text-white px-4 py-2 rounded-xl">
-                <Heart /> HR
+              <button onClick={() => startInterview("hr")} className="bg-pink-600/80 text-white px-4 py-2 rounded-xl hover:bg-pink-600 transition flex items-center gap-2">
+                <Heart size={18} /> HR
               </button>
             </div>
           </>

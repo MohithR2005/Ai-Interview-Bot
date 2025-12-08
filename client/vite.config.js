@@ -1,14 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "./", // ensures correct asset paths when deployed
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+  base: "./", // important for GitHub Pages / Vercel
   server: {
-    port: 5173, // optional: define local dev port
+    port: 5173,
   },
   build: {
-    outDir: "dist", // Vercel auto-serves from this
+    outDir: "dist",
   },
-})
+});

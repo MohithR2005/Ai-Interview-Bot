@@ -1,29 +1,13 @@
+import * as pdfParse from "pdf-parse";
 import fs from "fs";
-import PDFParser from "pdf2json";
 
-export function parseResume(filePath) {
-  return new Promise((resolve, reject) => {
-    try {
-      const pdfParser = new PDFParser();
-
-      pdfParser.on("pdfParser_dataError", (err) => {
-        console.error("PDF Parse Error:", err.parserError);
-        reject(new Error("Failed to parse PDF"));
-      });
-
-      pdfParser.on("pdfParser_dataReady", (pdfData) => {
-        const text = pdfData?.Texts
-          ? pdfData.Texts.map((t) =>
-              decodeURIComponent(t.R[0].T)
-            ).join(" ")
-          : "";
-        resolve(text);
-      });
-
-      pdfParser.loadPDF(filePath);
-    } catch (err) {
-      console.error("Error parsing PDF:", err);
-      reject(new Error("Failed to parse resume"));
-    }
-  });
-}
+export const parseResume = async (filePath) => {
+  try {
+    const dataBuffer = fs.readFileSync(filePath);
+    const data = await pdfParse(dataBuffer);
+    return data.text;
+  } catch (error) {
+    console.error("Error parsing PDF:", error);
+    throw new Error("Failed to parse resume");
+  }
+};

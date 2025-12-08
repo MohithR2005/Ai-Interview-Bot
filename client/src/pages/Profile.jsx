@@ -15,40 +15,40 @@ export default function Profile() {
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
-const email = storedUser?.email;
-const name = storedUser?.name;
-const photo = storedUser?.photo;
+  const email = storedUser?.email;
+  const name = storedUser?.name;
+  const photo = storedUser?.photo;
 
 
   // ✅ Fetch profile + history
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const profileRes = await axios.get(
-        `http://localhost:5000/api/user/profile/${email}`
-      );
+    const fetchData = async () => {
+      try {
+        const profileRes = await axios.get(
+          `http://localhost:5000/api/user/profile/${email}`
+        );
 
-      const historyRes = await axios.get(
-        `http://localhost:5000/api/user/history/${email}`
-      );
+        const historyRes = await axios.get(
+          `http://localhost:5000/api/user/history/${email}`
+        );
 
-      setProfile(profileRes.data || {});
-      setAbout(profileRes.data?.about || "");
-      setAvatar(profileRes.data?.avatar || "");
-      setAnalysisHistory(historyRes.data || []);
-    } catch (error) {
-      console.error("API ERROR:", error);
-      setProfile({
-        name: "Guest User",
-        email: email
-      });
-    } finally {
-      setLoading(false); // ✅ ALWAYS stops loader now
-    }
-  };
+        setProfile(profileRes.data || {});
+        setAbout(profileRes.data?.about || "");
+        setAvatar(profileRes.data?.avatar || "");
+        setAnalysisHistory(historyRes.data || []);
+      } catch (error) {
+        console.error("API ERROR:", error);
+        setProfile({
+          name: "Guest User",
+          email: email
+        });
+      } finally {
+        setLoading(false); // ✅ ALWAYS stops loader now
+      }
+    };
 
-  fetchData();
-}, [email]);
+    fetchData();
+  }, [email]);
 
 
   // ✅ Save profile updates
@@ -66,71 +66,71 @@ const photo = storedUser?.photo;
     }
   };
 
-if (loading || !profile) {
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Loader2 className="animate-spin text-indigo-500" size={32} />
-    </div>
-  );
-}
+  if (loading || !profile) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="animate-spin text-indigo-500" size={32} />
+      </div>
+    );
+  }
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-6">
+    <div className="min-h-screen p-6 flex flex-col items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-3xl mx-auto bg-white shadow-2xl rounded-2xl p-8"
+        className="w-full max-w-3xl bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-2xl p-8"
       >
         <div className="flex items-center gap-6 mb-6">
           <img
             src={
               avatar ||
               "https://api.dicebear.com/7.x/initials/svg?seed=" +
-                (profile.name || "User")
+              (profile.name || "User")
             }
             alt="Avatar"
-            className="w-24 h-24 rounded-full border-4 border-indigo-400"
+            className="w-24 h-24 rounded-full border-4 border-blue-500/50 shadow-lg"
           />
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
-              <User className="text-indigo-600" /> {name || "User"}
+            <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+              <User className="text-blue-400" /> {name || "User"}
             </h1>
-            <p className="text-gray-600 flex items-center gap-1">
-              <Mail className="text-indigo-400" /> {email}
+            <p className="text-gray-300 flex items-center gap-1 mt-1">
+              <Mail className="text-blue-300" size={16} /> {email}
             </p>
           </div>
         </div>
 
         {/* About Section */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2 flex items-center gap-2">
-            <Edit3 className="text-indigo-500" /> About Me
+          <h2 className="text-xl font-semibold text-blue-100 mb-3 flex items-center gap-2">
+            <Edit3 className="text-blue-400" /> About Me
           </h2>
           {editing ? (
             <textarea
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+              className="w-full p-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
               rows={4}
             />
           ) : (
-            <p className="text-gray-700 whitespace-pre-line">
+            <p className="text-gray-300 whitespace-pre-line leading-relaxed">
               {about || "No information provided yet."}
             </p>
           )}
-          <div className="mt-3">
+          <div className="mt-4">
             {editing ? (
               <button
                 onClick={handleSave}
-                className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:opacity-90 transition"
+                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition shadow-lg"
               >
                 Save
               </button>
             ) : (
               <button
                 onClick={() => setEditing(true)}
-                className="px-4 py-2 bg-gray-100 text-indigo-600 rounded-lg hover:bg-indigo-50 transition"
+                className="px-6 py-2 bg-white/10 text-blue-300 border border-white/10 rounded-lg hover:bg-white/20 transition"
               >
                 Edit
               </button>
@@ -140,27 +140,27 @@ if (loading || !profile) {
 
         {/* Analysis History */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            <FileText className="text-indigo-500" /> Resume Analysis History
+          <h2 className="text-xl font-semibold text-blue-100 mb-4 flex items-center gap-2">
+            <FileText className="text-blue-400" /> Resume Analysis History
           </h2>
           {analysisHistory.length === 0 ? (
-            <p className="text-gray-500">No analyses yet.</p>
+            <p className="text-gray-500 italic">No analyses yet.</p>
           ) : (
             <div className="space-y-4">
               {analysisHistory.map((a, index) => (
                 <div
                   key={index}
-                  className="p-4 border rounded-lg flex justify-between items-center hover:shadow-sm transition"
+                  className="p-4 bg-white/5 border border-white/10 rounded-xl flex justify-between items-center hover:bg-white/10 transition"
                 >
                   <div>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-white">
                       Role: {a.role}
                     </p>
-                    <p className="text-sm text-gray-600">
-                      Match Score: {a.matchScore}% | {new Date(a.date).toLocaleDateString()}
+                    <p className="text-sm text-gray-400">
+                      Match Score: <span className="text-blue-300">{a.matchScore}%</span> | {new Date(a.date).toLocaleDateString()}
                     </p>
                   </div>
-                  <button className="px-3 py-2 bg-indigo-500 text-white rounded-lg text-sm hover:opacity-90 transition">
+                  <button className="px-4 py-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-lg text-sm hover:bg-blue-500/30 transition">
                     Download Report
                   </button>
                 </div>
@@ -170,12 +170,12 @@ if (loading || !profile) {
         </div>
 
         {/* Change Resume Button */}
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate("/uploadresume")}
-            className="flex items-center justify-center gap-2 mx-auto px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-xl shadow-md hover:opacity-90 transition"
+            className="flex items-center justify-center gap-2 mx-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-full shadow-lg hover:shadow-blue-500/40 transition border border-white/10"
           >
             <Upload size={18} /> Change Resume
           </motion.button>

@@ -197,36 +197,36 @@ export default function UploadResume() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 relative"
+        className="w-full max-w-2xl bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 relative"
       >
         {/* Back */}
         <button
           onClick={() => navigate(-1)}
-          className="absolute top-4 left-4 text-gray-500 hover:text-blue-500 transition"
+          className="absolute top-4 left-4 text-gray-400 hover:text-white transition"
         >
           <ArrowLeft size={22} />
         </button>
 
-        <h1 className="text-3xl font-bold text-gray-800 text-center mb-4">
+        <h1 className="text-3xl font-bold text-white text-center mb-4">
           Upload Your Resume
         </h1>
-        <p className="text-center text-gray-600 mb-6">
+        <p className="text-center text-gray-400 mb-6">
           Role Selected:{" "}
-          <span className="font-semibold text-blue-600">{roleTitle}</span>
+          <span className="font-semibold text-blue-400">{roleTitle}</span>
         </p>
 
         {!analysis ? (
           <form onSubmit={handleUpload}>
             <label
               htmlFor="resume"
-              className="border-2 border-dashed border-blue-400 rounded-xl py-10 flex flex-col items-center justify-center cursor-pointer hover:bg-blue-50 transition"
+              className="border-2 border-dashed border-blue-500/30 rounded-xl py-10 flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition bg-white/5"
             >
-              <FileText size={40} className="text-blue-500 mb-3" />
-              <p className="text-gray-700 mb-2">
+              <FileText size={40} className="text-blue-400 mb-3" />
+              <p className="text-gray-300 mb-2">
                 {file ? file.name : "Click or drag file to upload"}
               </p>
               <p className="text-sm text-gray-500">(PDF or DOCX format)</p>
@@ -245,8 +245,8 @@ export default function UploadResume() {
               type="submit"
               disabled={!file || loading}
               className={`mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-white shadow-md transition ${file && !loading
-                ? "bg-gradient-to-r from-blue-500 to-indigo-500 hover:opacity-90"
-                : "bg-gray-400 cursor-not-allowed"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-blue-500/40"
+                : "bg-gray-700 cursor-not-allowed"
                 }`}
             >
               {loading ? (
@@ -264,25 +264,25 @@ export default function UploadResume() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-6 bg-gray-50 border border-gray-200 rounded-xl p-6"
+            className="mt-6 bg-white/5 border border-white/10 rounded-xl p-6"
           >
-            <h2 className="text-xl font-semibold text-blue-600 mb-3">
+            <h2 className="text-xl font-semibold text-blue-300 mb-3">
               Resume Match: {analysis.matchScore}%
             </h2>
 
             {analysis.opinion && (
-              <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
-                <h3 className="font-semibold text-blue-800 mb-1">AI Opinion:</h3>
-                <p className="text-gray-700 italic">"{analysis.opinion}"</p>
+              <div className="mb-4 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                <h3 className="font-semibold text-blue-200 mb-1">AI Opinion:</h3>
+                <p className="text-gray-300 italic">"{analysis.opinion}"</p>
               </div>
             )}
 
             {analysis.missingKeywords && analysis.missingKeywords.length > 0 && (
               <div className="mb-4">
-                <h3 className="font-semibold text-red-600 mb-2">Missing Keywords:</h3>
+                <h3 className="font-semibold text-red-300 mb-2">Missing Keywords:</h3>
                 <div className="flex flex-wrap gap-2">
                   {analysis.missingKeywords.map((kw, i) => (
-                    <span key={i} className="px-3 py-1 bg-red-50 text-red-600 rounded-full text-sm border border-red-100">
+                    <span key={i} className="px-3 py-1 bg-red-500/10 text-red-200 rounded-full text-sm border border-red-500/20">
                       {kw}
                     </span>
                   ))}
@@ -290,8 +290,8 @@ export default function UploadResume() {
               </div>
             )}
 
-            <h3 className="font-semibold text-gray-800 mb-2">Suggestions for Improvement:</h3>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <h3 className="font-semibold text-gray-200 mb-2">Suggestions for Improvement:</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-300">
               {analysis.suggestions.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
@@ -301,7 +301,7 @@ export default function UploadResume() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={handleDownloadReport}
-                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-green-500 text-white hover:bg-green-600"
+                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-green-600/80 text-white hover:bg-green-600 border border-green-500/30"
               >
                 <Download size={18} /> Download Report
               </motion.button>
@@ -309,7 +309,7 @@ export default function UploadResume() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={handleChangeResume}
-                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600"
+                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-yellow-600/80 text-white hover:bg-yellow-600 border border-yellow-500/30"
               >
                 <RotateCcw size={18} /> Change Resume
               </motion.button>
@@ -319,21 +319,21 @@ export default function UploadResume() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => navigate("/technical")}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500 text-white hover:bg-blue-600"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/80 text-white hover:bg-blue-600"
               >
                 <Brain size={18} /> Technical
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => navigate("/managerial")}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-500 text-white hover:bg-indigo-600"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600/80 text-white hover:bg-indigo-600"
               >
                 <Briefcase size={18} /> Managerial
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => navigate("/hr")}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-pink-500 text-white hover:bg-pink-600"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-pink-600/80 text-white hover:bg-pink-600"
               >
                 <Heart size={18} /> HR
               </motion.button>

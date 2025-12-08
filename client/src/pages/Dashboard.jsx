@@ -18,7 +18,7 @@ export default function Dashboard() {
       qna: "12 Q&A",
       date: "1st Oct 2025",
       skills: "React, CSS, HTML, JavaScript",
-      color: "from-green-100 to-blue-100",
+      color: "from-blue-500/20 to-cyan-500/20",
     },
     {
       id: "BE",
@@ -28,7 +28,7 @@ export default function Dashboard() {
       qna: "14 Q&A",
       date: "1st Oct 2025",
       skills: "Node.js, Express, MongoDB, REST APIs",
-      color: "from-yellow-100 to-orange-100",
+      color: "from-emerald-500/20 to-teal-500/20",
     },
     {
       id: "FS",
@@ -38,7 +38,7 @@ export default function Dashboard() {
       qna: "10 Q&A",
       date: "1st Oct 2025",
       skills: "MERN stack, deployment, auth",
-      color: "from-blue-100 to-indigo-100",
+      color: "from-violet-500/20 to-purple-500/20",
     },
     {
       id: "DS",
@@ -48,7 +48,7 @@ export default function Dashboard() {
       qna: "10 Q&A",
       date: "1st Oct 2025",
       skills: "Python, Pandas, ML, SQL",
-      color: "from-rose-100 to-pink-100",
+      color: "from-pink-500/20 to-rose-500/20",
     },
     {
       id: "DEV",
@@ -58,7 +58,7 @@ export default function Dashboard() {
       qna: "12 Q&A",
       date: "1st Oct 2025",
       skills: "CI/CD, Docker, AWS, Kubernetes",
-      color: "from-teal-100 to-cyan-100",
+      color: "from-orange-500/20 to-amber-500/20",
     },
     {
       id: "UX",
@@ -68,7 +68,7 @@ export default function Dashboard() {
       qna: "10 Q&A",
       date: "1st Oct 2025",
       skills: "Figma, wireframing, accessibility",
-      color: "from-purple-100 to-indigo-100",
+      color: "from-fuchsia-500/20 to-pink-500/20",
     },
   ]);
 
@@ -80,7 +80,7 @@ export default function Dashboard() {
     qna: "",
     date: "",
     skills: "",
-    color: "from-teal-100 to-cyan-100",
+    color: "from-teal-500/20 to-cyan-500/20",
   });
 
   const filteredRoles = roles.filter((r) =>
@@ -102,14 +102,14 @@ export default function Dashboard() {
         qna: "",
         date: "",
         skills: "",
-        color: "from-teal-100 to-cyan-100",
+        color: "from-teal-500/20 to-cyan-500/20",
       });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 flex flex-col items-center py-16 px-6">
-      <h1 className="text-4xl font-bold text-gray-800 mb-10 text-center">
+    <div className="min-h-screen flex flex-col items-center py-16 px-6">
+      <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300 mb-10 text-center drop-shadow-lg">
         Interview Prep Dashboard
       </h1>
 
@@ -120,24 +120,24 @@ export default function Dashboard() {
           placeholder="Search roles (e.g. Frontend, DevOps)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-teal-400 outline-none text-gray-700 shadow-md bg-white/90 backdrop-blur-sm"
+          className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/10 focus:ring-2 focus:ring-blue-400 outline-none text-white shadow-lg bg-white/10 backdrop-blur-md placeholder-gray-400/80 transition-all"
         />
         <Search
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"
           size={20}
         />
       </div>
 
       {/* Role Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
         {filteredRoles.map((role, index) => (
           <motion.div
             key={role.id + index}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.06, duration: 0.45 }}
-            whileHover={{ scale: 1.03 }}
-            className={`cursor-pointer bg-gradient-to-br ${role.color} rounded-2xl p-6 shadow-lg transition-transform`}
+            whileHover={{ scale: 1.02 }}
+            className={`cursor-pointer bg-gradient-to-br ${role.color} border border-white/10 rounded-2xl p-6 shadow-xl backdrop-blur-md hover:shadow-2xl hover:border-white/30 transition-all flex flex-col justify-between min-h-[220px]`}
             // ✅ Navigate to UploadResume
             onClick={() =>
               navigate(`/uploadresume/${encodeURIComponent(role.title)}`, {
@@ -145,19 +145,22 @@ export default function Dashboard() {
               })
             }
           >
-            <div className="flex items-center gap-4 mb-3">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center font-semibold text-gray-800 shadow">
-                {role.id}
+            <div>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 shrink-0 aspect-square rounded-full bg-white/20 flex items-center justify-center font-bold text-white shadow-inner text-lg">
+                  {role.id}
+                </div>
+                <h2 className="text-xl font-bold text-white tracking-wide leading-tight">{role.title}</h2>
               </div>
-              <h2 className="text-xl font-bold text-gray-800">{role.title}</h2>
+              <p className="text-gray-200 mb-6 text-sm font-medium">{role.skills}</p>
             </div>
-            <p className="text-gray-600 mb-3 text-sm">{role.skills}</p>
-            <div className="flex justify-between text-gray-500 text-xs mb-3">
-              <span>{role.exp}</span>
-              <span>{role.qna}</span>
-              <span>{role.date}</span>
+
+            <div className="grid grid-cols-3 gap-2 text-gray-300/90 text-xs font-semibold border-t border-white/10 pt-4 mt-auto">
+              <span className="text-left">{role.exp}</span>
+              <span className="text-center">{role.qna}</span>
+              <span className="text-right whitespace-nowrap">{role.date}</span>
             </div>
-            <p className="text-gray-700 text-sm font-medium">{role.desc}</p>
+            <p className="text-gray-300/90 text-sm leading-relaxed">{role.desc}</p>
           </motion.div>
         ))}
       </div>
@@ -167,7 +170,7 @@ export default function Dashboard() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setShowModal(true)}
-        className="mt-12 flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+        className="mt-12 flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-semibold shadow-2xl hover:shadow-blue-500/40 transition-shadow border border-white/10"
       >
         <PlusCircle size={20} />
         Add New Role
@@ -177,7 +180,7 @@ export default function Dashboard() {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-md z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -186,15 +189,15 @@ export default function Dashboard() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl relative"
+              className="bg-gray-900 border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl relative"
             >
               <button
                 onClick={() => setShowModal(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition"
+                className="absolute top-4 right-4 text-gray-500 hover:text-red-400 transition"
               >
                 <X size={22} />
               </button>
-              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">
                 Add New Role
               </h3>
               <form onSubmit={handleAddRole} className="space-y-4">
@@ -205,7 +208,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, id: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <input
                   type="text"
@@ -214,7 +217,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, title: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <input
                   type="text"
@@ -223,7 +226,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, skills: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <input
                   type="text"
@@ -232,7 +235,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, exp: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <input
                   type="text"
@@ -241,7 +244,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, qna: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <input
                   type="text"
@@ -250,7 +253,7 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, date: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none text-white placeholder-gray-500"
                 />
                 <textarea
                   placeholder="Description"
@@ -258,11 +261,11 @@ export default function Dashboard() {
                   onChange={(e) =>
                     setNewRole({ ...newRole, desc: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-teal-400 outline-none resize-none"
+                  className="w-full px-4 py-2 border border-white/10 bg-white/5 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none resize-none text-white placeholder-gray-500"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold hover:bg-teal-700 transition"
+                  className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
                 >
                   Save Role
                 </button>
@@ -279,7 +282,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
-            className="fixed bottom-10 right-10 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3"
+            className="fixed bottom-10 right-10 bg-green-500/90 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 backdrop-blur-md"
           >
             <CheckCircle2 size={22} />
             <span className="font-medium">Role added successfully!</span>

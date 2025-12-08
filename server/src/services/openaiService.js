@@ -55,5 +55,11 @@ export const extractResumeInsights = async (resumeText, role) => {
         response_format: { type: "json_object" }
     });
 
-    return JSON.parse(completion.choices[0].message.content);
+    try {
+        return JSON.parse(completion.choices[0].message.content);
+    } catch (parseError) {
+        console.error("❌ JSON Parse Error:", parseError);
+        console.error("Raw AI Response:", completion.choices[0].message.content);
+        throw new Error("AI returned invalid JSON format");
+    }
 };
