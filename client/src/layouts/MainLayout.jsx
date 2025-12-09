@@ -46,9 +46,7 @@ export default function MainLayout() {
   return (
     <div className="min-h-screen flex text-gray-100 relative overflow-hidden bg-black">
       {/* Background Component */}
-      <div className="absolute inset-0 z-0">
-        <AnoAI />
-      </div>
+      <AnoAI />
 
       {/* Sidebar */}
       <motion.aside

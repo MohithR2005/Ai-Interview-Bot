@@ -1,5 +1,7 @@
-import * as pdfParse from "pdf-parse";
 import fs from "fs";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");  // This will now WORK
 
 export const parseResume = async (filePath) => {
   try {
